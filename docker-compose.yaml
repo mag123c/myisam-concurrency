@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.3.39
+    container_name: my-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: test
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - '3300:3306'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
